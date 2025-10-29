@@ -21,7 +21,10 @@ public class Cliente {
     private String nomeCompleto;
 
     @Column(name = "cpf_cnpj", unique = true, nullable = false)
-    private String cpfCnpj; 
+    private String cpfCnpj;
+    
+     @Column(name = "senha", unique = true, nullable = false)
+    private String senha;
 
     @Column
     private String email;
@@ -32,6 +35,8 @@ public class Cliente {
     @Column
     private String endereco;
 
+
+
     @CreationTimestamp
     @Column(name = "data_cadastro", nullable = false, updatable = false)
     private LocalDateTime dataCadastro; 
@@ -39,7 +44,7 @@ public class Cliente {
     public Cliente() {
     }
 
-    public Cliente(Long id, String nomeCompleto, String cpfCnpj, String email, String telefone, String endereco, LocalDateTime dataCadastro) {
+    public Cliente(Long id, String nomeCompleto, String cpfCnpj, String email, String telefone, String endereco, String senha, LocalDateTime dataCadastro) {
         this.id = id;
         this.nomeCompleto = nomeCompleto;
         this.cpfCnpj = cpfCnpj;
@@ -47,6 +52,7 @@ public class Cliente {
         this.telefone = telefone;
         this.endereco = endereco;
         this.dataCadastro = dataCadastro;
+        this.senha = senha;
     }
 
     //Getters

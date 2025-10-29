@@ -1,3 +1,4 @@
+package smartLegalApi.demo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import smartLegalApi.demo.Model.Advogado;
@@ -12,7 +13,7 @@ public class AdvogadoService {
     @Autowired
     private AdvogadoRepository advogadoRepository;
 
-    public Advogado criarAdv(smartLegalApi.demo.Model.Advogado newAdv){
+    public Advogado criarAdv(Advogado newAdv){
 
         if(newAdv.getOab() == null || newAdv.getOab().isBlank()){
             throw new IllegalArgumentException("OAB é obrigatório");
@@ -30,7 +31,7 @@ public class AdvogadoService {
             throw new IllegalArgumentException("senha não pode ser nulo ou vazio");
         }
 
-           if(newAdv.getEmail() == null || newAdv.getEmail().isBlank()){
+        if(newAdv.getEmail() == null || newAdv.getEmail().isBlank()){
             throw new IllegalArgumentException("email não pode ser nulo ou vazio");
         }
 
@@ -45,6 +46,7 @@ public class AdvogadoService {
         if(newAdv.getSenha().length()< 6){
             throw new IllegalArgumentException("Senha deve ter no mínimo 6 caracteres");
         }
+        return advogadoRepository.save(newAdv);
     }
 
     public boolean validarLogin(String Oab, String senhaFornecida){
