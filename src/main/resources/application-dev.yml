@@ -1,0 +1,40 @@
+# ===============================================
+# PERFIL DE DESENVOLVIMENTO
+# ===============================================
+
+spring:
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  flyway:
+    clean-disabled: false # Permite clean em dev
+
+server:
+  error:
+    include-stacktrace: always # Stack trace em dev
+
+logging:
+  level:
+    root: INFO
+    smartLegalApi: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+  file:
+    name: ./logs/smartlegal-dev.log
+
+app:
+  jwt:
+    secret: dev-secret-key-change-in-production
+    expiration: 86400000 # 24 horas
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" # Todos os endpoints em dev
+

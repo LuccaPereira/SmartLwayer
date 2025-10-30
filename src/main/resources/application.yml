@@ -1,0 +1,179 @@
+# ===============================================
+# CONFIGURAÇÃO PRINCIPAL - SMART LEGAL API
+# ===============================================
+
+spring:
+  application:
+    name: smart-legal-api
+
+  # ===============================================
+  # DATASOURCE - MySQL
+  # ===============================================
+  datasource:
+    url: jdbc:mysql://localhost:3306/smartlegal?createDatabaseIfNotExist=true&serverTimezone=America/Sao_Paulo&useSSL=false
+    username: root
+    password: Maximus10
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    # HikariCP Pool Configuration
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      pool-name: SmartLegalHikariPool
+
+  # ===============================================
+  # JPA / HIBERNATE
+  # ===============================================
+  jpa:
+    hibernate:
+      ddl-auto: none # Flyway controla o schema
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        use_sql_comments: true
+        jdbc:
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+    show-sql: false # Usar logback para SQL
+    open-in-view: false
+
+  # ===============================================
+  # FLYWAY - Database Migrations
+  # ===============================================
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 0
+    locations: classpath:db/migration
+    validate-on-migrate: true
+    clean-disabled: true # Segurança: desabilita clean em prod
+
+  # ===============================================
+  # JACKSON - Serialização JSON
+  # ===============================================
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+      indent-output: true
+    time-zone: America/Sao_Paulo
+    date-format: yyyy-MM-dd'T'HH:mm:ss
+    default-property-inclusion: non_null
+
+  # ===============================================
+  # MULTIPART - Upload de Arquivos
+  # ===============================================
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 15MB
+      file-size-threshold: 2MB
+
+  # ===============================================
+  # CACHE
+  # ===============================================
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=1000,expireAfterWrite=600s
+
+# ===============================================
+# SERVER
+# ===============================================
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: never # Nunca em prod
+    include-exception: false
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain
+
+# ===============================================
+# SPRINGDOC - OpenAPI/Swagger
+# ===============================================
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    operations-sorter: method
+    tags-sorter: alpha
+    display-request-duration: true
+    disable-swagger-default-url: true
+
+# ===============================================
+# LOGGING
+# ===============================================
+logging:
+  level:
+    root: INFO
+    smartLegalApi: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr([%thread]){magenta} %clr(%-5level){highlight} %clr(%logger{36}){cyan} %clr(-){faint} %msg%n"
+
+# ===============================================
+# MANAGEMENT - Actuator
+# ===============================================
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when-authorized
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+# ===============================================
+# JWT - Configurações de Autenticação
+# ===============================================
+jwt:
+  secret: ${JWT_SECRET:SmartLegalApiSecretKey2024MuitoSeguraParaProducao123456789}
+  expiration: 86400000 # 24 horas em milissegundos
+  refresh-expiration: 604800000 # 7 dias em milissegundos
+  issuer: SmartLegalApi
+  token-prefix: "Bearer "
+  header-name: Authorization
+
+# ===============================================
+# APLICAÇÃO - Configurações Customizadas
+# ===============================================
+# ===============================================
+# GEMINI AI - Configurações
+# ===============================================
+gemini:
+  api-key: ${GEMINI_API_KEY:sua-chave-aqui}
+  model: gemini-pro
+  max-tokens: 4096
+  temperature: 0.7
+  api-url: https://generativelanguage.googleapis.com/v1beta/models
+
+# ===============================================
+# APLICAÇÃO - Configurações Customizadas
+# ===============================================
+app:
+  upload:
+    directory: ${UPLOAD_DIR:./uploads}
+    max-size: 10485760 # 10MB em bytes
+
+  cors:
+    allowed-origins:
+      - http://localhost:3000
+      - http://localhost:9000
+      - https://smartlegal.com.br
