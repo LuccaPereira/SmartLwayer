@@ -1,0 +1,34 @@
+package smartLegalApi.application.auth.dto.request;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+/**
+ * DTO de Request: Resetar senha usando token
+ */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Schema(description = "Dados para resetar senha com token")
+public class ResetarSenhaRequest {
+    
+    @NotBlank(message = "Token é obrigatório")
+    @Schema(description = "Token de reset recebido por email", example = "abc123...")
+    private String token;
+    
+    @NotBlank(message = "Nova senha é obrigatória")
+    @Size(min = 8, message = "Nova senha deve ter no mínimo 8 caracteres")
+    @Schema(description = "Nova senha (mínimo 8 caracteres, letras e números)", example = "SenhaNova123")
+    private String novaSenha;
+    
+    @NotBlank(message = "Confirmação de senha é obrigatória")
+    @Schema(description = "Confirmação da nova senha", example = "SenhaNova123")
+    private String confirmarNovaSenha;
+}
+

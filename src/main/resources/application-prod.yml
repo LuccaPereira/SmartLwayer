@@ -1,0 +1,56 @@
+# ===============================================
+# PERFIL DE PRODUÇÃO
+# ===============================================
+
+spring:
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 10
+
+  jpa:
+    show-sql: false
+
+  flyway:
+    clean-disabled: true # NUNCA permitir clean em produção
+
+server:
+  port: ${SERVER_PORT:8080}
+  error:
+    include-stacktrace: never
+    include-exception: false
+
+logging:
+  level:
+    root: WARN
+    smartLegalApi: INFO
+    org.hibernate: WARN
+    org.springframework: WARN
+  file:
+    name: /var/log/smartlegal/app.log
+    max-size: 50MB
+    max-history: 30
+
+app:
+  jwt:
+    secret: ${JWT_SECRET} # OBRIGATÓRIO vir de variável de ambiente
+    expiration: 28800000 # 8 horas em produção
+
+  gemini:
+    api-key: ${GEMINI_API_KEY}
+
+  upload:
+    directory: ${UPLOAD_DIR:/opt/smartlegal/uploads}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: never # Não expor detalhes em prod
+

@@ -1,33 +1,60 @@
-HELP.md
+# ===============================================
+# GITIGNORE - SMART LEGAL API
+# ===============================================
+
+# Compiled class files
+*.class
 target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+*.jar
+*.war
+*.ear
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
-.idea
-*.iws
+# IDE
+.idea/
 *.iml
-*.ipr
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
+*.iws
 .vscode/
+.settings/
+.classpath
+.project
+*.swp
+*.swo
+
+# Maven
+.mvn/
+mvnw
+mvnw.cmd
+
+# Logs
+logs/
+*.log
+
+# Environment
+.env
+.env.local
+.env.*.local
+application-local.yml
+application-local.properties
+
+# Uploads / Arquivos temporários
+uploads/
+temp/
+tmp/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Database
+*.db
+*.sqlite
+
+# Secrets / Credentials
+*.key
+*.pem
+*.p12
+secrets/
+
+# Spring Boot
+HELP.md

@@ -1,0 +1,52 @@
+# ===============================================
+# CONFIGURAÇÃO PARA TESTES - SMART LEGAL API
+# ===============================================
+
+spring:
+  # H2 em memória para testes
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  h2:
+    console:
+      enabled: true
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  # Flyway desabilitado para testes (usamos create-drop)
+  flyway:
+    enabled: false
+
+# JWT para testes
+jwt:
+  secret: test-secret-key-for-unit-tests-only
+  expiration: 3600000 # 1 hora
+  refresh-expiration: 7200000 # 2 horas
+  issuer: SmartLegalApiTest
+  token-prefix: "Bearer "
+  header-name: Authorization
+
+# Gemini mock para testes
+gemini:
+  api-key: test-api-key
+  model: gemini-pro
+  max-tokens: 1000
+  temperature: 0.5
+  api-url: http://localhost:8080/mock
+
+# Logging para testes
+logging:
+  level:
+    root: INFO
+    smartLegalApi: DEBUG
+    org.hibernate.SQL: DEBUG
