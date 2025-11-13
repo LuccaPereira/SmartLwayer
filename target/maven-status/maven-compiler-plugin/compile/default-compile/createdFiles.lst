@@ -1,0 +1,13 @@
+smartLegalApi\demo\Model\Cliente.class
+smartLegalApi\demo\Controller\AdvogadoController.class
+smartLegalApi\demo\Repository\DocumentosRepository.class
+AdvogadoService.class
+smartLegalApi\demo\Repository\AdvogadoRepository.class
+smartLegalApi\demo\Model\Processos.class
+smartLegalApi\demo\SmartlegalBootApplication.class
+smartLegalApi\demo\Repository\ClienteRepository.class
+smartLegalApi\demo\Model\Documentos.class
+smartLegalApi\demo\Repository\ProcessosRepository.class
+smartLegalApi\demo\Model\Processos$Status.class
+smartLegalApi\demo\Controller\ClienteController.class
+smartLegalApi\demo\Model\Advogado.class
